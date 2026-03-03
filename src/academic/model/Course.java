@@ -1,18 +1,31 @@
 package academic.model;
 
-public class Course {
+/**
+ * @author 12S24046 Indah Elsadai Nainggolan
+ */
 
+public class Course {
     private String code;
     private String name;
-    private int credit;
-    private String grade;
+    private int credits;
+    private String grade; // Tipe data String untuk nilai huruf
 
-    public Course(String code, String name, int credit, String grade) {
+    /**
+     * Konstruktor untuk membuat objek Course baru.
+     *
+     * @param code Kode unik mata kuliah.
+     * @param name Nama lengkap mata kuliah.
+     * @param credits Jumlah Satuan Kredit Semester (SKS) mata kuliah.
+     * @param grade Nilai huruf yang diperoleh dalam mata kuliah.
+     */
+    public Course(String code, String name, int credits, String grade) {
         this.code = code;
         this.name = name;
-        this.credit = credit;
+        this.credits = credits;
         this.grade = grade;
     }
+
+    // --- Getters ---
 
     public String getCode() {
         return code;
@@ -22,11 +35,22 @@ public class Course {
         return name;
     }
 
-    public int getCredit() {
-        return credit;
+    public int getCredits() {
+        return credits;
     }
 
     public String getGrade() {
         return grade;
+    }
+
+    /**
+     * Mengembalikan representasi String dari objek Course.
+     * Format: [Kode Mata Kuliah]|[Nama Mata Kuliah]|[SKS]|[Nilai]
+     *
+     * @return String representasi Course.
+     */
+    @Override
+    public String toString() {
+        return String.format("%s|%s|%d|%s", code, name, credits, grade);
     }
 }

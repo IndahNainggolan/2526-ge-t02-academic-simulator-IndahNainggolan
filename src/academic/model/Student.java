@@ -1,32 +1,66 @@
 package academic.model;
 
-public class Student {
+/**
+ * @author 12S24046 Indah Elsadai Nainggolan
 
-    private String nim;
+
+/**
+ * Kelas Student merepresentasikan seorang mahasiswa dalam sistem akademik.
+ * Menyimpan informasi ID, nama, tahun masuk, dan program studi.
+ */
+public class Student { // <<< Pastikan baris ini ada dan benar
+    private String id;
     private String name;
-    private int year;
-    private String studyProgram;
+    private String year; // Tahun masuk
+    private String studyProgram; // Program Studi
 
-    public Student(String nim, String name, int year, String studyProgram) {
-        this.nim = nim;
+    /**
+     * Konstruktor untuk membuat objek Student baru.
+     *
+     * @param id ID unik mahasiswa.
+     * @param name Nama lengkap mahasiswa.
+     * @param year Tahun masuk mahasiswa.
+     * @param studyProgram Program studi yang diambil mahasiswa.
+     */
+    public Student(String id, String name, String year, String studyProgram) {
+        this.id = id;
         this.name = name;
         this.year = year;
         this.studyProgram = studyProgram;
     }
 
-    public String getNim() {
-        return nim;
+    // --- Getters ---
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
     public String getStudyProgram() {
         return studyProgram;
+    }
+
+    // --- Setters (Jika diperlukan, bisa ditambahkan) ---
+    // public void setId(String id) { this.id = id; }
+    // public void setName(String name) { this.name = name; }
+    // public void setYear(String year) { this.year = year; }
+    // public void setStudyProgram(String studyProgram) { this.studyProgram = studyProgram; }
+
+    /**
+     * Mengembalikan representasi String dari objek Student.
+     * Format: [ID Mahasiswa]|[Nama Mahasiswa]|[Tahun Masuk]|[Program Studi]
+     *
+     * @return String representasi Student.
+     */
+    @Override
+    public String toString() {
+        return String.format("%s|%s|%s|%s", id, name, year, studyProgram);
     }
 }

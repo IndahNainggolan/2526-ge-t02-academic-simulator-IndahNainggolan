@@ -1,45 +1,61 @@
 package academic.driver;
+import academic.model.Student; // Mengimpor kelas Student
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import academic.model.Student;
+/**
+ * @author 12S24046 Indah Elsadai Nainggolan
+ */
 
 public class Driver2 {
 
     public static void main(String[] args) {
-
+        List<Student> students = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        Student[] students = new Student[100];
-        int count = 0;
+       
 
-        while (true) {
-            String input = scanner.nextLine();
-
-            if (input.equals("---")) {
-                break;
+        String line;
+        while (scanner.hasNextLine()) {
+            line = scanner.nextLine();
+            
+            // Menghentikan input jika baris adalah "---"
+            if (line.trim().equals("---")) { 
+                break; 
             }
 
-            String[] parts = input.split("#");
+            // Memproses input dengan pemisah '#'
+            String[] parts = line.split("#");
+            if (parts.length == 4) {
+                try {
+                    String id = parts[0].trim();
+                    String name = parts[1].trim();
+                    String year = parts[2].trim();
+                    String studyProgram = parts[3].trim();
 
-            students[count] = new Student(
-                parts[0],
-                parts[1],
-                Integer.parseInt(parts[2]),
-                parts[3]
-            );
-
-            count++;
+                    // Membuat objek Student dan menambahkannya ke daftar
+                    Student newStudent = new Student(id, name, year, studyProgram);
+                    students.add(newStudent);
+                    // System.out.println("Mahasiswa berhasil ditambahkan: " + newStudent); // Opsional: Konfirmasi penambahan
+                } catch (Exception e) {
+                    System.err.println("Error memproses input '" + line + "': " + e.getMessage());
+                }
+            } else {
+                System.err.println("Error: Format input tidak valid. Harap gunakan: ID#Nama#TahunMasuk#ProgramStudi. Input '" + line + "' diabaikan.");
+            }
         }
 
-        for (int i = 0; i < count; i++) {
-            System.out.println(
-                students[i].getNim() + "|" +
-                students[i].getName() + "|" +
-                students[i].getYear() + "|" +
-                students[i].getStudyProgram()
-            );
+  
+        if (students.isEmpty()) {
+            System.out.println("Belum ada mahasiswa yang ditambahkan.");
+        } else {
+            for (Student student : students) {
+                System.out.println(student); // Menggunakan method toString() dari kelas Student
+            }
         }
 
-        scanner.close();
+        scanner.close(); // Menutup scanner
+
     }
 }

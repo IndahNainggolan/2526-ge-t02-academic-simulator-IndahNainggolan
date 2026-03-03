@@ -1,45 +1,60 @@
 package academic.driver;
 
-import java.util.Scanner;
-import academic.model.Course;
+import academic.model.Course; // Mengimpor kelas Course
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * @author 12S24046 Indah Elsadai Nainggolan
+ */
 public class Driver1 {
 
-    public static void main(String[] args) {
-
+      public static void main(String[] args) {
+        List<Course> courses = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        Course[] courses = new Course[100];
-        int count = 0;
-
-        while (true) {
-            String input = scanner.nextLine();
-
-            if (input.equals("---")) {
-                break;
+        String line;
+        while (scanner.hasNextLine()) {
+            line = scanner.nextLine();
+            
+            // Menghentikan input jika baris adalah "---"
+            if (line.trim().equals("---")) { 
+                break; 
             }
 
-            String[] parts = input.split("#");
+            // Memproses input dengan pemisah '#'
+            String[] parts = line.split("#");
+            if (parts.length == 4) {
+                try {
+                    String code = parts[0].trim();
+                    String name = parts[1].trim();
+                    int credits = Integer.parseInt(parts[2].trim());
+                    String grade = parts[3].trim();
 
-            courses[count] = new Course(
-                parts[0],
-                parts[1],
-                Integer.parseInt(parts[2]),
-                parts[3]
-            );
-
-            count++;
+                    // Membuat objek Course dan menambahkannya ke daftar
+                    Course newCourse = new Course(code, name, credits, grade);
+                    courses.add(newCourse);
+                    // System.out.println("Mata kuliah berhasil ditambahkan: " + newCourse); // Opsional: Konfirmasi penambahan
+                } catch (NumberFormatException e) {
+                    System.err.println("Error: SKS harus berupa angka. Input '" + line + "' diabaikan.");
+                } catch (Exception e) {
+                    System.err.println("Error memproses input '" + line + "': " + e.getMessage());
+                }
+            } else {
+                System.err.println("Error: Format input tidak valid. Harap gunakan: Kode#Nama#SKS#Nilai. Input '" + line + "' diabaikan.");
+            }
         }
 
-        for (int i = 0; i < count; i++) {
-            System.out.println(
-                courses[i].getCode() + "|" +
-                courses[i].getName() + "|" +
-                courses[i].getCredit() + "|" +
-                courses[i].getGrade()
-            );
+        if (courses.isEmpty()) {
+            System.out.println("Belum ada mata kuliah yang ditambahkan.");
+        } else {
+            for (Course course : courses) {
+                System.out.println(course); // Menggunakan method toString() dari kelas Course
+            }
         }
 
-        scanner.close();
+        scanner.close(); // Menutup scanner
     }
 }
